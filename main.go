@@ -28,7 +28,8 @@ import (
 	"github.com/RiskIdent/gocrud/pkg/model"
 	"github.com/alecthomas/kong"
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 var cli struct {
@@ -40,8 +41,10 @@ var cli struct {
 func main() {
 	kong.Parse(&cli)
 
+	initLogger()
+
 	if err := mainE(); err != nil {
-		log.WithError(err).Error("Failed execution.")
+		log.Error().Err(err).Msg("Failed execution.")
 		os.Exit(1)
 	}
 }
@@ -53,10 +56,20 @@ func mainE() error {
 	}
 	defer db.Close()
 
-	router := gin.Default()
+	gin.DefaultErrorWriter = log.Logger
+	gin.DefaultWriter = log.Logger
+
+	router := gin.New()
+
+	router.Use(
+		gin.LoggerWithConfig(gin.LoggerConfig{
+			SkipPaths: []string{"/"},
+		}),
+		gin.Recovery(),
+	)
 
 	router.GET("/", func(c *gin.Context) {
-		c.Status(http.StatusNoContent)
+		c.JSON(http.StatusOK, gin.H{"message": "Hello from gocrud :)"})
 	})
 
 	v1 := router.Group("/v1")
@@ -74,6 +87,7 @@ func mainE() error {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 				return
 			}
+			log.Info().Str("id", id).Msg("Created new server.")
 			c.JSON(http.StatusOK, gin.H{"id": id})
 		})
 
@@ -98,4 +112,12 @@ func mainE() error {
 	}
 
 	return router.Run(cli.BindAddress)
+}
+
+func initLogger() error {
+	log.Logger = log.Output(zerolog.ConsoleWriter{
+		Out:        os.Stderr,
+		TimeFormat: "Jan-02 15:04",
+	})
+	return nil
 }

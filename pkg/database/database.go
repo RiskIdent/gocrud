@@ -21,10 +21,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/url"
 	"time"
 
 	"github.com/RiskIdent/gocrud/pkg/model"
-	log "github.com/sirupsen/logrus"
+	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -53,7 +54,7 @@ type MongoDBClient struct {
 var _ Client = &MongoDBClient{}
 
 func ConnectMongoDB(ctx context.Context, uri, db string) (Client, error) {
-	log.WithFields(log.Fields{"mongouri": uri}).Info("Connecting to mongodb")
+	log.Info().Str("mongouri", sanitizeURI(uri)).Msg("Connecting to mongodb.")
 	ctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
@@ -63,7 +64,7 @@ func ConnectMongoDB(ctx context.Context, uri, db string) (Client, error) {
 	if err := client.Ping(ctx, readpref.Primary()); err != nil {
 		return nil, err
 	}
-	log.WithFields(log.Fields{"mongouri": uri}).Debug("Connected to mongodb")
+	log.Debug().Msg("Connected to mongodb.")
 	return &MongoDBClient{
 		uri:        uri,
 		mongo:      client,
@@ -104,10 +105,21 @@ func (c *MongoDBClient) Close() error {
 	if c.mongo == nil {
 		return nil
 	}
-	log.WithFields(log.Fields{"context": "mongodb"}).Debug("Disconnecting from mongo")
+	log.Debug().Msg("Disconnecting from mongodb.")
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 	err := c.mongo.Disconnect(ctx)
 	c.mongo = nil
 	return err
+}
+
+func sanitizeURI(value string) string {
+	u, err := url.Parse(value)
+	if err != nil {
+		return "*censoring invalid url*"
+	}
+	if u.User != nil {
+		u.User = url.UserPassword("...", "...")
+	}
+	return u.String()
 }
