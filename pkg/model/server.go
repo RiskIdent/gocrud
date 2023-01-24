@@ -24,7 +24,7 @@ type NewServer struct {
 }
 
 type Server struct {
-	ID          string `json:"id" bson:"-"`
+	ID          string `json:"id" bson:"_id"`
 	Name        string `json:"name" bson:"name,omitempty"`
 	Description string `json:"description" bson:"description,omitempty"`
 	Datacenter  string `json:"datacenter" bson:"datacenter,omitempty"`
