@@ -163,10 +163,10 @@ Responses:
 
    ```console
    $ curl localhost:8080/v1/server -d @examples/server.json
-   {"result":{"InsertedID":"63d00f3a87cb268ed07657e6"}}
+   {"id":"63d00f3a87cb268ed07657e6"}
 
    $ curl localhost:8080/v1/server/63d00f3a87cb268ed07657e6
-   {"result":{"name":"main","description":"The main server hosted in central Europe, right at the bottom of the baltic lake in a hidden underwater base.","datacenter":"eu_central_1"}}
+   {"name":"main","description":"The main server hosted in central Europe, right at the bottom of the baltic lake in a hidden underwater base.","datacenter":"eu_central_1"}
    ```
 
 ## License
