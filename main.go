@@ -36,9 +36,9 @@ import (
 )
 
 var cli struct {
-	MongoUri string `default:"mongodb://localhost:27017" help:"Mongodb uri to use" env:"MONGOURI"`
-	DbName   string `default:"servers" help:"Mongodb database to use" env:"MONGODB"`
-	ColName  string `default:"servers" help:"Mongodb collection to use" env:"COLNAME"`
+	MongoUri string `default:"mongodb://localhost:27017" help:"MongoDB uri to use" env:"MONGOURI"`
+	DbName   string `default:"servers" help:"MongoDB database to use" env:"MONGODB"`
+	ColName  string `default:"servers" help:"MongoDB collection to use" env:"COLNAME"`
 }
 
 func mongoConnect(mongouri string) (*mongo.Client, error) {
