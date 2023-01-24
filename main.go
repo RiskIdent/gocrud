@@ -102,6 +102,7 @@ func mainE() error {
 			}
 			if errors.Is(err, database.ErrBadRequest) {
 				c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+				return
 			}
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
