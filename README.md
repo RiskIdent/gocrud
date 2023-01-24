@@ -11,15 +11,25 @@ SPDX-License-Identifier: CC-BY-4.0
 Simple CRUD application that exposes an HTTP REST API to store data inside
 a MongoDB database.
 
-## Configuration
+## Usage
+
+### Configuration
 
 gocrud is configured via command-line flags or environment variables.
 
-| Flag          | Environment variable | Default                     | Description               |
-| ------------- | -------------------- | --------------------------- | ------------------------- |
-| `--mongo-uri` | `MONGOURI`           | `mongodb://localhost:27017` | MongoDB URI to use        |
-| `--db-name`   | `MONGODB`            | `servers`                   | MongoDB database to use   |
-| `--col-name`  | `COLNAME`            | `servers`                   | MongoDB collection to use |
+| Flag             | Environment variable  | Default                     | Description             |
+| ---------------- | --------------------- | --------------------------- | ----------------------- |
+| `--bind-address` | `GOCRUD_BIND_ADDRESS` | `0.0.0.0:8080`              | Address to serve API on |
+| `--mongo-uri`    | `GOCRUD_MONGO_URI`    | `mongodb://localhost:27017` | MongoDB URI to use      |
+| `--mongo-db`     | `GOCRUD_MONGO_DB`     | `gocrud`                    | MongoDB database to use |
+
+### MongoDB authentication
+
+Authentication can be provided via the MongoDB URI. Example:
+
+```properties
+GOCRUD_MONGO_URI=mongodb://admin:password@localhost:27017
+```
 
 ## API
 
@@ -66,6 +76,15 @@ Responses:
 > }
 > ```
 
+> Status: **500 Internal Server Error**\
+> Body:
+>
+> ```json
+> {
+>   "error": "string"
+> }
+> ```
+
 ### Get server
 
 ```http
@@ -102,6 +121,15 @@ Responses:
 > ```
 
 > Status: **404 Not Found**\
+> Body:
+>
+> ```json
+> {
+>   "error": "string"
+> }
+> ```
+
+> Status: **500 Internal Server Error**\
 > Body:
 >
 > ```json

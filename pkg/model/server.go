@@ -15,9 +15,16 @@
 // You should have received a copy of the GNU General Public License along
 // with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-package models
+package model
+
+type NewServer struct {
+	Name        string `json:"name" bson:"name,omitempty"`
+	Description string `json:"description" bson:"description,omitempty"`
+	Datacenter  string `json:"datacenter" bson:"datacenter,omitempty"`
+}
 
 type Server struct {
+	ID          string `json:"id" bson:"-"`
 	Name        string `json:"name" bson:"name,omitempty"`
 	Description string `json:"description" bson:"description,omitempty"`
 	Datacenter  string `json:"datacenter" bson:"datacenter,omitempty"`
