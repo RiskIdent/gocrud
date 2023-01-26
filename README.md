@@ -40,15 +40,13 @@ By default, gocrud exposes the following endpoints on port 8080:
 
 ### Create server
 
-```http
-POST /v1/server
-```
-
 Creates a new server, and returns the ID of the server created.
 
-Request body:
+```http
+POST /v1/server
+Accept: application/json
+Content-Type: application/json
 
-```json
 {
   "name": "string",
   "description": "string",
@@ -58,28 +56,34 @@ Request body:
 
 <details><summary>Responses (click to expand)</summary>
 
-> Status: **200 OK**\
-> Body:
+> - Object successfully created
 >
-> ```json
+> ```http
+> HTTP/1.1 200 OK
+> Content-Type: application/json; charset=utf-8
+> 
 > {
 >   "id": "string"
 > }
 > ```
 
-> Status: **400 Bad Request**\
-> Body:
+> - Invalid request body
 >
-> ```json
+> ```http
+> HTTP/1.1 400 Bad Request
+> Content-Type: application/json; charset=utf-8
+> 
 > {
 >   "error": "string"
 > }
 > ```
 
-> Status: **500 Internal Server Error**\
-> Body:
+> - Failed to create object in database
 >
-> ```json
+> ```http
+> HTTP/1.1 500 Internal Server Error
+> Content-Type: application/json; charset=utf-8
+> 
 > {
 >   "error": "string"
 > }
@@ -89,22 +93,26 @@ Request body:
 
 ### Get server
 
+Retrieves an existing server.
+
 ```http
 GET /v1/server/:id
+Accept: application/json
 ```
-
-Retrieves an existing server.
 
 Parameters:
 
-- `:id` *(path)*: ID of the server object.
+- `:id` *(path)*: ID of the server object,
+  formatted as a 24-character long hexadecimal number.
 
 <details><summary>Responses (click to expand)</summary>
 
-> Status: **200 OK**\
-> Body:
+> - Object successfully retrieved.
 >
-> ```json
+> ```http
+> HTTP/1.1 200 OK
+> Content-Type: application/json; charset=utf-8
+> 
 > {
 >   "id": "string",
 >   "name": "string",
@@ -113,28 +121,34 @@ Parameters:
 > }
 > ```
 
-> Status: **400 Bad Request**\
-> Body:
->
-> ```json
+> - Invalid `:id` parameter format.
+> 
+> ```http
+> HTTP/1.1 400 Bad Request
+> Content-Type: application/json; charset=utf-8
+> 
 > {
 >   "error": "string"
 > }
 > ```
 
-> Status: **404 Not Found**\
-> Body:
->
-> ```json
+> - No server was found with the ID of `:id`
+> 
+> ```http
+> HTTP/1.1 404 Not Found
+> Content-Type: application/json; charset=utf-8
+> 
 > {
 >   "error": "string"
 > }
 > ```
 
-> Status: **500 Internal Server Error**\
-> Body:
->
-> ```json
+> - Failed to retrieve object from database.
+> 
+> ```http
+> HTTP/1.1 500 Internal Server Error
+> Content-Type: application/json; charset=utf-8
+> 
 > {
 >   "error": "string"
 > }
@@ -166,7 +180,7 @@ Parameters:
 3. To test out the webhooks, you can make use of our example webhook like so:
 
    ```console
-   $ curl localhost:8080/v1/server -d @examples/server.json
+   $ curl localhost:8080/v1/server --json @examples/server.json
    {"id":"63d00f3a87cb268ed07657e6"}
 
    $ curl localhost:8080/v1/server/63d00f3a87cb268ed07657e6
