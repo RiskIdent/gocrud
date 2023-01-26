@@ -56,7 +56,7 @@ Request body:
 }
 ```
 
-Responses:
+<details><summary>Responses (click to expand)</summary>
 
 > Status: **200 OK**\
 > Body:
@@ -85,6 +85,8 @@ Responses:
 > }
 > ```
 
+</details>
+
 ### Get server
 
 ```http
@@ -97,7 +99,7 @@ Parameters:
 
 - `:id` *(path)*: ID of the server object.
 
-Responses:
+<details><summary>Responses (click to expand)</summary>
 
 > Status: **200 OK**\
 > Body:
@@ -137,6 +139,8 @@ Responses:
 >   "error": "string"
 > }
 > ```
+
+</details>
 
 ## Development
 
