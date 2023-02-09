@@ -184,7 +184,7 @@ Parameters:
    {"id":"63d00f3a87cb268ed07657e6"}
 
    $ curl localhost:8080/v1/pet/63d00f3a87cb268ed07657e6
-   {"name":"main","description":"The main pet hosted in central Europe, right at the bottom of the baltic lake in a hidden underwater base.","datacenter":"eu_central_1"}
+   {"id":"63d00f3a87cb268ed07657e6","name":"Grande Hazelnut Mc.Muffin","species":"dog","breed":"Dobermann"}
    ```
 
 ## License
