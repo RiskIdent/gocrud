@@ -15,7 +15,8 @@ a MongoDB database.
 
 ### Configuration
 
-gocrud is configured via command-line flags or environment variables.
+gocrud is configured via command-line flags or environment variables.\
+An .env file configures environment variables for both the application and MongoDB. Use the provided .env.example as a template.
 
 | Flag             | Environment variable  | Default                     | Description             |
 | ---------------- | --------------------- | --------------------------- | ----------------------- |
@@ -162,6 +163,8 @@ Parameters:
 
 - Go 1.20 (or higher)
 - A way to run MongoDB locally, e.g via a container using [Podman](https://podman.io/)
+- Docker installed on your machine
+- Docker Compose for orchestrating multi-container setups (optional)
 
 ### Running locally
 
@@ -186,6 +189,34 @@ Parameters:
    $ curl localhost:8080/v1/pet/63d00f3a87cb268ed07657e6
    {"id":"63d00f3a87cb268ed07657e6","name":"Grande Hazelnut Mc.Muffin","species":"dog","breed":"Dobermann"}
    ```
+
+### Running with Docker
+
+To run the `gocrud` application using Docker:
+
+1. **Build the Docker Image:**
+   ```console
+   docker build -t gocrud .
+   ```
+
+2. **Run the Application:**
+   ```console
+   docker run -p 8080:8080 gocrud
+   ```
+
+This will build and run the gocrud application in a Docker container, exposing it on port 8080.
+
+### Running with Docker Compose
+
+For running the application with MongoDB:
+
+1. **Start Services:**
+   ```console
+   docker-compose up
+   ```
+   
+This will start both the gocrud application and a MongoDB instance, configured to work together.
+
 
 ## License
 
