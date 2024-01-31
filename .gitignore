@@ -4,7 +4,7 @@
 
 tmp/
 /gocrud
-/.env*
+/.env
 build/
 # from https://github.com/github/gitignore/blob/main/Go.gitignore
 # Binaries for programs and plugins
