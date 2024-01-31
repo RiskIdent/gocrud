@@ -214,9 +214,8 @@ For running the application with MongoDB:
    ```console
    docker-compose up
    ```
-   
-This will start both the gocrud application and a MongoDB instance, configured to work together.
 
+This will start both the gocrud application and a MongoDB instance, configured to work together.
 
 ## License
 
