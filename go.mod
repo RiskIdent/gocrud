@@ -9,7 +9,7 @@ go 1.25.5
 require (
 	github.com/alecthomas/kong v1.14.0
 	github.com/gin-gonic/gin v1.12.0
-	github.com/rs/zerolog v1.34.0
+	github.com/rs/zerolog v1.35.0
 	go.mongodb.org/mongo-driver v1.17.9
 )
 
