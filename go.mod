@@ -10,7 +10,7 @@ require (
 	github.com/alecthomas/kong v1.16.1
 	github.com/gin-gonic/gin v1.12.0
 	github.com/rs/zerolog v1.35.1
-	go.mongodb.org/mongo-driver v1.17.9
+	go.mongodb.org/mongo-driver v1.17.10
 )
 
 require (
